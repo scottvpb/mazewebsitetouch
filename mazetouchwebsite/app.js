@@ -115,81 +115,9 @@ const MazeViewer = () => {
 
 Something was ringing behind one of the doors. They spent some time trying to decide which door it was, not understanding that the silences of the Maze are as eloquent as the sounds.
 
-"Decisions, decisions," one said. "Too many decisions."
-
-"The story of my life," said another.
-
-"We don't want to be late," said a third, opening one of the doors.
-
-"Nary a soul to be seen," said the first, peering into the gloom.
-
-I waited patiently for them to choose which way to go . . .`,
-            image: './images/room1.jpg',
-            doors: [20, 26, 41, 21],
-            clickableAreas: [
-                { door: 20, coords: [150, 100, 270, 300] },
-                { door: 26, coords: [530, 100, 650, 300] },
-                { door: 41, coords: [300, 350, 500, 500] },
-                { door: 21, coords: [100, 400, 250, 550] }
-            ]
-        }
-    };
-
-    const room = roomData[currentRoom];
-
-    // Load notes and check for first visit on mount
-    useEffect(() => {
-        const savedNotes = localStorage.getItem('mazeNotes');
-        const savedDrawing = localStorage.getItem('mazeDrawing');
-        const savedRoom = localStorage.getItem('mazeCurrentRoom');
-        const hasVisited = localStorage.getItem('mazeHasVisited');
-        
-        if (!hasVisited) {
-            // First time visitor - show welcome modal
-            setShowWelcomeModal(true);
-            localStorage.setItem('mazeHasVisited', 'true');
-        } else if (savedNotes || savedDrawing || savedRoom) {
-            // Returning visitor with data
-            if (savedNotes) setNotes(savedNotes);
-            if (savedRoom) setCurrentRoom(parseInt(savedRoom));
-            if (savedDrawing && canvasRef.current) {
-                const img = new Image();
-                img.onload = () => {
-                    const ctx = canvasRef.current.getContext('2d');
-                    ctx.drawImage(img, 0, 0);
-                };
-                img.src = savedDrawing;
-            }
-        }
-    }, []);
-
-    // Save notes whenever they change
-    useEffect(() => {
-        if (notes) {
-            localStorage.setItem('mazeNotes', notes);
-        }
-    }, [notes]);
-
-    // Save current room
-    useEffect(() => {
-        localStorage.setItem('mazeCurrentRoom', currentRoom.toString());
-    }, [currentRoom]);
-
-    // Save drawing whenever canvas changes
-    const saveDrawing = () => {
-        if (canvasRef.current) {
-            const dataURL = canvasRef.current.toDataURL();
-            localStorage.setItem('mazeDrawing', dataURL);
-        }
-    };
-
-    // Warn before leaving if there are unsaved changes
-    useEffect(() => {
-        const handleBeforeUnload = (e) => {
-            if (notes || (canvasRef.current && canvasRef.current.toDataURL() !== getEmptyCanvasDataURL())) {
-                e.preventDefault();
-                e.returnValue = '';
-                
+    const roomData = {
+        1: {
+            text: `They looked carefully at the bronze doors, trying to choose. The uncertainty of visitors is one of my little pleasures.
                 // Try to show custom dialog (may not work in all browsers)
                 setTimeout(() => {
                     if (confirm('Would you like to download a copy of your notes before leaving?')) {
@@ -204,20 +132,75 @@ I waited patiently for them to choose which way to go . . .`,
     }, [notes]);
 
     const getEmptyCanvasDataURL = () => {
+            image: './images/room1.jpg',
+            doors: [20, 26, 41, 21],
+            clickableAreas: [
+                { door: 20, coords: [119, 53, 219, 241] },
+                { door: 26, coords: [238, 52, 337, 238] },
+                { door: 41, coords: [350, 45, 400, 264] },
+                { door: 21, coords: [415, 35, 472, 303] }
+            ]
+        },
+        2: {
+            text: `...a bright room whose walls were in some disrepair. The floorboards creaked and groaned; the plaster made a gritty sound. They studied the old frescoes for clues but missed the obvious signs.
         const canvas = document.createElement('canvas');
         canvas.width = 800;
+            image: './images/room2.jpg',
+            doors: [22, 29, 12],
+            clickableAreas: [
+                { door: 22, coords: [187, 69, 314, 244] },
+                { door: 29, coords: [48, 52, 112, 273] },
+                { door: 12, coords: [387, 44, 450, 317] }
+            ]
+        },
+        3: {
+            text: `. . . an entirely different kind of place.
         canvas.height = 600;
         return canvas.toDataURL();
     };
+            image: './images/room3.jpg',
+            doors: [33, 9, 18],
+            clickableAreas: [
+                { door: 33, coords: [23, 23, 76, 345] },
+                { door: 9, coords: [254, 35, 339, 228] },
+                { door: 18, coords: [392, 18, 448, 314] }
+            ]
+        },
+        4: {
+            text: `. . . the great hall of many doors.
 
     // Download notes as JSON file
     const downloadNotes = () => {
         const notesData = {
             textNotes: notes,
+            image: './images/room4.jpg',
+            doors: [44, 29, 15, 11, 16, 24, 43],
+            clickableAreas: [
+                { door: 44, coords: [37, 24, 115, 363] },
+                { door: 29, coords: [135, 63, 172, 285] },
+                { door: 15, coords: [177, 78, 198, 254] },
+                { door: 11, coords: [226, 91, 269, 224] },
+                { door: 16, coords: [297, 76, 319, 259] },
+                { door: 24, coords: [327, 61, 361, 290] },
+                { door: 43, coords: [384, 27, 456, 359] }
+            ]
+        },
+        5: {
+            text: `. . . the tree room.
             drawing: canvasRef.current ? canvasRef.current.toDataURL() : null,
             currentRoom: currentRoom,
             timestamp: new Date().toISOString()
         };
+            image: './images/room5.jpg',
+            doors: [43, 22, 30, 20],
+            clickableAreas: [
+                { door: 43, coords: [41, 77, 102, 244] },
+                { door: 22, coords: [154, 75, 213, 244] },
+                { door: 30, coords: [270, 78, 331, 240] },
+                { door: 20, coords: [378, 86, 446, 243] }
+            ]
+        }
+    };
         
         const blob = new Blob([JSON.stringify(notesData, null, 2)], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
