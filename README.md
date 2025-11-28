@@ -1,14 +1,23 @@
-# mazewebsite
-Website version of Christopher Manson's 1985 book, Maze: Solve the World's Most Challenging Puzzle
+# mazewebsite for Touch
+Website version of Christopher Manson's 1985 book, Maze: Solve the World's Most Challenging Puzzle, by Al Sweigart
+I than forked it for the base code and the assets.
+Al Sweigart's website for the original is at [https://inventwithpython.com/mazewebsite/](https://inventwithpython.com/mazewebsite)
+My take on this: I wanted to read the book, and play the puzzle. But it was very difficult to navigate on a cellphone, So I spun it into a touch app.     This can now be used as a framework for anyone else that may want to make a static point and click adventure.
 
-The website is at [https://inventwithpython.com/mazewebsite/](https://inventwithpython.com/mazewebsite/)
+There is a Janky notes system that will allow you to save text and drawings link a travel log, you can save it as a JSON file and load it between the games you play. I wanted this feature because it would save me needing a pen and paper.
 
-If you want to download a copy of the maze website to play offline on your computer, click the green Code button on this GitHub page and then click Download ZIP. Unpack the zip file on your computer (you only need the mazewebsite folder, you can delete the src folder, .gitignore, and README.md) and then open the mazewebsite/index.html file.
 
-The src/generate_mazewebsite_html.py generates room1.html through room45.html but not the HTML files for index, contest, directions, and prologue. All of these files are already generated and in the mazewebsite folder; you'd only need to run generate_mazewebsite_html.py if you want to make a change to the room*.html files.
+From the fork I kept the images and made use of the maps for what part of the images link to what other pages.
 
-If you find this project helpful and would like to support its development, [consider donating to its creator on Patreon.](https://www.patreon.com/AlSweigart)
+We have built out 5 components to get this project where I wanted it.
 
-Created by Al Sweigart, author of several books that teach beginners to code and are free to read on his website, [https://inventwithpython.com](https://inventwithpython.com)
+Index.html - This file glues the resources and libraries together
+App.js  - This is the application in JavaScript
+roomData.js – JavaScript flat data file with room data, image maps and links between rooms.  
 
-This unofficial website is not affiliated with Christopher Manson or Henry Holt and Company.
+debug.html – Glue file for a debug version of the app, 
+app-debug.js - This is based  on the normal app.js and will show the hot spot in the image with the coordinates, it also shows the current mouse position, so you can get the coordinates to update the roomData.js file.
+
+In progress is an advanced Debug app that will let you map the destinations and area of the point of interest / hotspot so you can save the snippet into the RoomData.js
+
+Scott Bruder ScottB.ca - London Ontario Canada
